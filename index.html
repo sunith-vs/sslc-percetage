@@ -104,7 +104,7 @@
 
   <footer>Inspired by Eduport • Built with ❤️</footer>
 
-  <script>
+<!--   <script>
     const gradePoints = { 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C+': 5, 'C': 4, 'D+': 3, 'D': 2 };
 
     function calculate() {
@@ -128,7 +128,46 @@
       document.getElementById('result').innerText =
         `Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
     }
-  </script>
+  </script> -->
+<script>
+  const gradePoints = {
+    'A+': 9,
+    'A': 8,
+    'B+': 7,
+    'B': 6,
+    'C+': 5,
+    'C': 4,
+    'D+': 3,
+    'D': 2
+  };
+
+  function calculate() {
+    const form = document.forms['gradeForm'];
+    let totalPoints = 0, totalSubjects = 0;
+
+    for (let grade in gradePoints) {
+      const count = parseInt(form[grade].value) || 0;
+      totalPoints += count * gradePoints[grade];
+      totalSubjects += count;
+    }
+
+    if (totalSubjects === 0) {
+      document.getElementById('result').innerText = "Please enter at least one subject.";
+      return;
+    }
+
+    if (totalSubjects !== 10) {
+      document.getElementById('result').innerText = "Please enter grades for exactly 10 subjects.";
+      return;
+    }
+
+    const avgPoint = totalPoints;
+    const percentage = (avgPoint * 10) / 9;
+
+    document.getElementById('result').innerText =
+      `Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
+  }
+</script>
 
 </body>
 </html>
