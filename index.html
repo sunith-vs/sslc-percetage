@@ -2,16 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SSLC Grade to Percentage Calculator</title>
+  <title>SSLC Grade to Percentage</title>
   <style>
-    body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
-    input { width: 50px; margin-right: 10px; }
-    label { display: block; margin-top: 10px; }
-    #result { margin-top: 20px; font-weight: bold; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffefc;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    h2 {
+      color: #ff5e1a;
+      margin-top: 30px;
+      font-size: 28px;
+    }
+
+    form {
+      background-color: #fff9f4;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      padding: 6px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #ff5e1a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
-  <h2>SSLC Grade to Percentage Calculator</h2>
+
+  <header>
+    <img src="https://eduport.app/wp-content/uploads/2024/09/Eduport-Logo1.svg.png" alt="Logo">
+  </header>
+
+  <h2>SSLC Grade to Percentage</h2>
 
   <form id="gradeForm">
     <label>A+ : <input type="number" name="A+" min="0" value="0"></label>
@@ -23,10 +97,12 @@
     <label>D+ : <input type="number" name="D+" min="0" value="0"></label>
     <label>D  : <input type="number" name="D" min="0" value="0"></label>
 
-    <button type="button" onclick="calculate()">Calculate Percentage</button>
+    <button type="button" onclick="calculate()">Calculate</button>
   </form>
 
   <div id="result"></div>
+
+  <footer>Inspired by Eduport • Built with ❤️</footer>
 
   <script>
     const gradePoints = { 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C+': 5, 'C': 4, 'D+': 3, 'D': 2 };
@@ -53,5 +129,6 @@
         `Average Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
     }
   </script>
+
 </body>
 </html>
