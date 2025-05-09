@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SSLC Grade to Percentage Calculator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 500px; margin: auto; }
+    input { width: 50px; margin-right: 10px; }
+    label { display: block; margin-top: 10px; }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>SSLC Grade to Percentage Calculator</h2>
+
+  <form id="gradeForm">
+    <label>A+ : <input type="number" name="A+" min="0" value="0"></label>
+    <label>A  : <input type="number" name="A" min="0" value="0"></label>
+    <label>B+ : <input type="number" name="B+" min="0" value="0"></label>
+    <label>B  : <input type="number" name="B" min="0" value="0"></label>
+    <label>C+ : <input type="number" name="C+" min="0" value="0"></label>
+    <label>C  : <input type="number" name="C" min="0" value="0"></label>
+    <label>D+ : <input type="number" name="D+" min="0" value="0"></label>
+    <label>D  : <input type="number" name="D" min="0" value="0"></label>
+
+    <button type="button" onclick="calculate()">Calculate Percentage</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const gradePoints = { 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C+': 5, 'C': 4, 'D+': 3, 'D': 2 };
+
+    function calculate() {
+      const form = document.forms['gradeForm'];
+      let totalPoints = 0, totalSubjects = 0;
+
+      for (let grade in gradePoints) {
+        const count = parseInt(form[grade].value) || 0;
+        totalPoints += count * gradePoints[grade];
+        totalSubjects += count;
+      }
+
+      if (totalSubjects === 0) {
+        document.getElementById('result').innerText = "Please enter at least one subject.";
+        return;
+      }
+
+      const avgPoint = totalPoints / totalSubjects;
+      const percentage = (avgPoint * 10) / 9;
+
+      document.getElementById('result').innerText =
+        `Average Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
+    }
+  </script>
+</body>
+</html>
