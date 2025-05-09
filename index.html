@@ -122,11 +122,11 @@
         return;
       }
 
-      const avgPoint = totalPoints / totalSubjects;
+      const avgPoint = totalPoints;
       const percentage = (avgPoint * 10) / 9;
 
       document.getElementById('result').innerText =
-        `Average Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
+        `Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
     }
   </script>
 
