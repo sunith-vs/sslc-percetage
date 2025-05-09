@@ -1,8 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SSLC Grade to Percentage</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSLC Grade to Percentage By Eduport</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -10,6 +13,7 @@
       margin: 0;
       padding: 0;
       text-align: center;
+      color: #333;
     }
 
     header {
@@ -23,151 +27,354 @@
 
     header img {
       height: 40px;
+      max-width: 100%;
+      object-fit: contain;
     }
 
     h2 {
       color: #ff5e1a;
-      margin-top: 30px;
-      font-size: 28px;
+      margin: 20px 10px 10px; /* Reduced top margin */
+      font-size: 6vw;
     }
 
     form {
       background-color: #fff9f4;
       border-radius: 12px;
-      padding: 30px;
-      margin: 30px auto;
-      max-width: 400px;
+      padding: 20px;
+      margin: 15px auto; /* Reduced top margin */
+      max-width: 90%;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
     label {
       display: flex;
       justify-content: space-between;
-      margin: 10px 0;
-      font-size: 16px;
+      align-items: center;
+      margin: 10px 0; /* Reduced margin */
+      font-size: 4.2vw; /* Slightly smaller */
+      color: #555;
     }
 
-    input[type="number"] {
-      width: 60px;
-      padding: 6px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
+    label input {
+        padding: 8px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+    label input:focus {
+        border-color: #ff5e1a;
+        outline: none;
     }
 
-    button {
+    input[type="number"].grade-input {
+      width: 70px; /* Adjusted width */
+      text-align: center;
+    }
+
+    input[type="text"].detail-input,
+    input[type="tel"].detail-input {
+      width: calc(100% - 90px); /* Adjust width */
+      max-width: 200px;
+    }
+
+    button[type="submit"] { /* Changed selector for specificity */
       margin-top: 20px;
       background-color: #ff5e1a;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 20px; /* Adjusted padding */
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 1em; /* Adjusted font size */
+      font-weight: bold;
+      width: 100%;
+      max-width: 280px;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+        background-color: #e05010;
+    }
+     button[type="submit"]:active {
+        background-color: #c04008;
     }
 
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 18px;
-      color: #333;
+    hr {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(255, 94, 26, 0), rgba(255, 94, 26, 0.75), rgba(255, 94, 26, 0));
+        margin: 15px 0; /* Reduced margin */
     }
 
     footer {
-      margin-top: 30px;
-      font-size: 13px;
+      margin-top: 20px; /* Reduced margin */
+      font-size: 0.85em; /* Slightly smaller */
       color: #aaa;
+      padding: 10px;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6); /* Dim background */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fffefc;
+      margin: auto;
+      padding: 25px;
+      border: 1px solid #ffc9b3; /* Light orange border */
+      border-radius: 10px;
+      width: 85%;
+      max-width: 450px; /* Max width for modal */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      text-align: left;
+      position: relative;
+      animation: fadeInModal 0.3s ease-out;
+    }
+
+    @keyframes fadeInModal {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 1;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+    }
+    .modal-close-btn:hover,
+    .modal-close-btn:focus {
+      color: #ff5e1a; /* Orange on hover */
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #modal-message {
+      margin-top: 10px; /* Space for close button */
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #333;
+      white-space: pre-wrap; /* Respect newlines */
+    }
+
+    #modal-message.error-message {
+      color: #c0392b; /* Red for errors */
+      font-weight: bold;
+    }
+     #modal-message.success-message {
+      color: #27ae60; /* Green for success (optional, if needed for specific styling) */
+       font-weight: normal;
+    }
+
+
+    /* Responsive adjustments */
+    @media (min-width: 600px) {
+      h2 {
+        font-size: 28px;
+      }
+      label {
+        font-size: 16px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      form {
+        max-width: 480px; /* Adjusted max width */
+        padding: 25px;
+      }
+      input[type="text"].detail-input,
+      input[type="tel"].detail-input {
+        width: 220px;
+      }
+      .modal-content {
+        padding: 30px;
+      }
+      #modal-message {
+        font-size: 1.15em;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="https://eduport.app/wp-content/uploads/2024/09/Eduport-Logo1.svg.png" alt="Logo">
+    <img src="https://eduport.app/wp-content/uploads/2024/09/Eduport-Logo1.svg.png"
+         alt="Eduport Logo"
+         onerror="this.alt='Eduport Logo'; this.src='https://placehold.co/150x40/eeeeee/cccccc?text=Logo&font=sans-serif';">
   </header>
 
   <h2>SSLC Grade to Percentage</h2>
 
-  <form id="gradeForm">
-    <label>A+ : <input type="number" name="A+" min="0" value="0"></label>
-    <label>A  : <input type="number" name="A" min="0" value="0"></label>
-    <label>B+ : <input type="number" name="B+" min="0" value="0"></label>
-    <label>B  : <input type="number" name="B" min="0" value="0"></label>
-    <label>C+ : <input type="number" name="C+" min="0" value="0"></label>
-    <label>C  : <input type="number" name="C" min="0" value="0"></label>
-    <label>D+ : <input type="number" name="D+" min="0" value="0"></label>
-    <label>D  : <input type="number" name="D" min="0" value="0"></label>
+  <form id="gradeForm" onsubmit="event.preventDefault(); calculateAndDisplay();">
+    <label>Name: <input type="text" name="name" class="detail-input" required></label>
+    <label>Mobile Number: <input type="tel" name="mobile" class="detail-input" pattern="[0-9]{10}" placeholder="10-digit number" required></label>
+    <hr>
+    <label>A+ : <input type="number" name="A+" class="grade-input" min="0" value="0"></label>
+    <label>A  : <input type="number" name="A"  class="grade-input" min="0" value="0"></label>
+    <label>B+ : <input type="number" name="B+" class="grade-input" min="0" value="0"></label>
+    <label>B  : <input type="number" name="B"  class="grade-input" min="0" value="0"></label>
+    <label>C+ : <input type="number" name="C+" class="grade-input" min="0" value="0"></label>
+    <label>C  : <input type="number" name="C"  class="grade-input" min="0" value="0"></label>
+    <label>D+ : <input type="number" name="D+" class="grade-input" min="0" value="0"></label>
+    <label>D  : <input type="number" name="D"  class="grade-input" min="0" value="0"></label>
 
-    <button type="button" onclick="calculate()">Calculate</button>
+    <button type="submit">Calculate</button>
   </form>
 
-  <div id="result"></div>
+  <div id="resultModalOverlay" class="modal-overlay">
+    <div class="modal-content">
+      <span class="modal-close-btn" onclick="closeModal()">&times;</span>
+      <div id="modal-message"></div>
+    </div>
+  </div>
 
-  <footer>Inspired by Eduport • Built with ❤️</footer>
+  <footer style="padding-bottom: 20px;">Inspired by Eduport • Built with ❤️</footer>
 
-<!--   <script>
-    const gradePoints = { 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C+': 5, 'C': 4, 'D+': 3, 'D': 2 };
+  <script>
+    // Grade point mapping
+    const gradePoints = {
+      'A+': 9, 'A': 8, 'B+': 7, 'B': 6,
+      'C+': 5, 'C': 4, 'D+': 3, 'D': 2
+    };
 
-    function calculate() {
-      const form = document.forms['gradeForm'];
-      let totalPoints = 0, totalSubjects = 0;
+    // Supabase endpoint - replace with your actual function URL if different
+    // IMPORTANT: Replace <YOUR_PROJECT_REF> if you haven't, or use your specific function name.
+    // The previous HTML used "lead", this one uses "insert-sslc-result" to match the Canvas.
+    const supabaseLeadEndpoint = "https://dfpwtcfiwivljktssfmk.supabase.co/functions/v1/lead";
 
-      for (let grade in gradePoints) {
-        const count = parseInt(form[grade].value) || 0;
-        totalPoints += count * gradePoints[grade];
-        totalSubjects += count;
+
+    // Get modal elements
+    const modalOverlay = document.getElementById('resultModalOverlay');
+    const modalMessageDiv = document.getElementById('modal-message');
+
+    // Function to show the modal
+    function showModal(message, isError = false) {
+      modalMessageDiv.textContent = message;
+      modalMessageDiv.className = isError ? 'error-message' : 'success-message'; // Use success-message for non-errors
+      modalOverlay.style.display = "flex"; // Use flex to center content
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      modalOverlay.style.display = "none";
+    }
+
+    // Close modal if user clicks on the overlay
+    window.onclick = function(event) {
+      if (event.target == modalOverlay) {
+        closeModal();
       }
+    }
 
-      if (totalSubjects === 0) {
-        document.getElementById('result').innerText = "Please enter at least one subject.";
+    // Function to handle calculation and display
+    async function calculateAndDisplay() {
+      const form = document.forms['gradeForm'];
+
+      // Get and validate name
+      const name = form['name'].value.trim();
+      if (!name) {
+        showModal("Please enter your name.", true);
         return;
       }
 
-      const avgPoint = totalPoints;
-      const percentage = (avgPoint * 10) / 9;
+      // Get and validate mobile number
+      const mobile = form['mobile'].value.trim();
+      if (!/^\d{10}$/.test(mobile)) {
+        showModal("Please enter a valid 10-digit mobile number.", true);
+        return;
+      }
 
-      document.getElementById('result').innerText =
-        `Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
+      let totalPoints = 0;
+      let totalSubjects = 0;
+      let aPlusCount = 0;
+
+      // Calculate total points and subjects from form inputs
+      for (const grade in gradePoints) {
+        const countInput = form[grade];
+        if (countInput) {
+          const count = parseInt(countInput.value) || 0;
+          if (count < 0) {
+             showModal(`Number of subjects for grade ${grade} cannot be negative.`, true);
+             return;
+          }
+          if (grade === 'A+') {
+            aPlusCount = count;
+          }
+          totalPoints += count * gradePoints[grade];
+          totalSubjects += count;
+        }
+      }
+
+      // Validate total number of subjects
+      if (totalSubjects === 0) {
+        showModal("Please enter counts for at least one grade.", true);
+        return;
+      }
+      if (totalSubjects !== 10) {
+        showModal(`Please enter grade counts for exactly 10 subjects. You entered for ${totalSubjects}.`, true);
+        return;
+      }
+
+      const finalGradePoint = totalPoints;
+      const percentage = (finalGradePoint * 10) / 9;
+
+      // Prepare payload for Supabase
+      const leadPayload = {
+        name: name,
+        aplus: aPlusCount,
+        phone_number: mobile,
+      };
+
+      // Display results in modal
+      showModal(`Calculated Grade Point: ${finalGradePoint.toFixed(2)}\nOverall Percentage: ${percentage.toFixed(2)}%`);
+
+      // Asynchronously send data to Supabase
+      try {
+        if (supabaseLeadEndpoint.includes("<YOUR_PROJECT_REF>")) {
+            console.warn("Supabase endpoint URL is not updated with your project reference. Submission skipped.");
+            // Optionally, inform the user in the modal or a separate non-blocking way
+            // For now, just log and proceed without actual submission.
+            return; // Or let it try and fail if that's preferred for testing.
+        }
+
+        const response = await fetch(supabaseLeadEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // No apikey/Authorization needed here if the Edge Function uses SERVICE_ROLE_KEY internally
+            // and is callable publicly or via anon key if RLS is set up for it.
+          },
+          body: JSON.stringify(leadPayload)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: "Failed to parse error response from Supabase" }));
+          console.warn(`Supabase submission failed. Status: ${response.status}`, errorData);
+        } else {
+          const successData = await response.json();
+          console.log("Data sent to Supabase successfully:", successData.message);
+        }
+      } catch (error) {
+        console.error("Error sending data to Supabase:", error);
+      }
     }
-  </script> -->
-<script>
-  const gradePoints = {
-    'A+': 9,
-    'A': 8,
-    'B+': 7,
-    'B': 6,
-    'C+': 5,
-    'C': 4,
-    'D+': 3,
-    'D': 2
-  };
-
-  function calculate() {
-    const form = document.forms['gradeForm'];
-    let totalPoints = 0, totalSubjects = 0;
-
-    for (let grade in gradePoints) {
-      const count = parseInt(form[grade].value) || 0;
-      totalPoints += count * gradePoints[grade];
-      totalSubjects += count;
-    }
-
-    if (totalSubjects === 0) {
-      document.getElementById('result').innerText = "Please enter at least one subject.";
-      return;
-    }
-
-    if (totalSubjects !== 10) {
-      document.getElementById('result').innerText = "Please enter grades for exactly 10 subjects.";
-      return;
-    }
-
-    const avgPoint = totalPoints;
-    const percentage = (avgPoint * 10) / 9;
-
-    document.getElementById('result').innerText =
-      `Grade Point: ${avgPoint.toFixed(2)} → Percentage: ${percentage.toFixed(2)}%`;
-  }
-</script>
+  </script>
 
 </body>
 </html>
