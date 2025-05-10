@@ -342,36 +342,27 @@
       };
 
       // Display results in modal
-      showModal(`Calculated Grade Point: ${finalGradePoint.toFixed(2)}\nOverall Percentage: ${percentage.toFixed(2)}%`);
+      showModal(`SSLC percentage: ${percentage.toFixed(2)}%`);
 
       // Asynchronously send data to Supabase
       try {
-        if (supabaseLeadEndpoint.includes("<YOUR_PROJECT_REF>")) {
-            console.warn("Supabase endpoint URL is not updated with your project reference. Submission skipped.");
-            // Optionally, inform the user in the modal or a separate non-blocking way
-            // For now, just log and proceed without actual submission.
-            return; // Or let it try and fail if that's preferred for testing.
-        }
-
+       
         const response = await fetch(supabaseLeadEndpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // No apikey/Authorization needed here if the Edge Function uses SERVICE_ROLE_KEY internally
-            // and is callable publicly or via anon key if RLS is set up for it.
+  
           },
           body: JSON.stringify(leadPayload)
         });
 
         if (!response.ok) {
-          const errorData = await response.json().catch(() => ({ error: "Failed to parse error response from Supabase" }));
-          console.warn(`Supabase submission failed. Status: ${response.status}`, errorData);
+          const errorData = await response.json().catch(() => ({ error: "Failed to parse error" }));
         } else {
           const successData = await response.json();
-          console.log("Data sent to Supabase successfully:", successData.message);
         }
       } catch (error) {
-        console.error("Error sending data to Supabase:", error);
+        console.error(error);
       }
     }
   </script>
